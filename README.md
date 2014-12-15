@@ -14,7 +14,7 @@ a server instance to which it's going to inject requests:
     var server = new Hapi.Server();
 
     var api = require('iso-fetch');
-    api.init({ server: { server: server } });
+    api.init({ hapi: { server: server } });
 
 To use the API, either on the client or server, do
 
