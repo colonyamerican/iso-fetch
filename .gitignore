@@ -1,0 +1,13 @@
+# Default list of files to ignore
+.DS_Store
+
+# Logs
+npm-debug.log
+
+# Node stuff
+node_modules/
+
+
+# VIM temp files
+.*.sw*
+
