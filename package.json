@@ -1,6 +1,6 @@
 {
   "name": "iso-fetch",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "An isomorphic fetcher",
   "main": "lib/index.js",
   "keywords": [
@@ -9,7 +9,9 @@
     "hapi",
     "jquery"
   ],
-  "author": "Michal Kawalec",
+  "author": {
+    "name": "Michal Kawalec"
+  },
   "license": "MIT",
   "dependencies": {
     "bluebird": "^2.3.11",
@@ -17,5 +19,12 @@
     "jquery": "^2.1.1",
     "lodash": "^2.4.1",
     "ramda": "^0.13.0"
-  }
+  },
+  "readme": "iso-fetch\n=========\n\nAn isomorphic API proxy, so far supporting hapijs and jquery transports.\n\n## Protocol\n\nBe advised that if your server response is a proper JSON with a `payload` key,\nthe value under `payload` will be taken as a response. This allows us to pass\nadditional metadata in the response.\n\n## Usage\n\nAssuming a standard jquery/hapijs setup, the usage is straightforward.\nSetup is only required on the server, so that you need to provide `iso-fetch` with\na server instance to which it's going to inject requests:\n\n    var server = new Hapi.Server();\n\n    var api = require('iso-fetch');\n    api.init({ hapi: { server: server } });\n\nTo use the API, either on the client or server, do\n\n    var api = require('iso-fetch');\n    api.request({ url: '/parachutes' }).then(function handle(replyData) { ...\n\nOther properties of the request like `statusCode` or `headers` are bound to this\non the request `handle`r.\n\nHave fun!\n\n### Setting different transports\n\nYou can set different transports in different contexts, as well force `iso-fetch` to\nalways use a given transport. The latter is probably not something you want to \nbe doing, so only do it if you know what you want to achieve.\n\nSecond parameter of `.init` sets respective transports like\n\n    var api = require('iso-fetch');\n    api.init({}, {\n      server: 'SLS',\n      client: 'dragons'\n    });\n\nIn order to force a transport for the current environment\n\n    app.init({}, { current: 'jquery' });\n\nWhich will obviously result in an error if used on the server side. Be careful.\n\n\n## Writing your own transports\n\nTransports to other servers/clients are very welcome. A transport needs to export two\nfunctions, `request` and `init`. Both accept a single `Object` and are used to post the\nrequest and initialize the transport, respectively.\n\nRemember that only the reply contents has to be passed down the promise chain\nto the handler, the rest of the parameters (currently `statusCode` and `headers`)\nare need to be bound to this.\n\nWhen in doubt, consult the `hapi` and `jquery` transports.\n",
+  "readmeFilename": "README.md",
+  "gitHead": "f69a1331398635aec862406891111676694af3b7",
+  "_id": "iso-fetch@0.4.0",
+  "scripts": {},
+  "_shasum": "8511700b7413cd9c50180708164891826960d200",
+  "_from": "iso-fetch@>=0.4.0 <0.5.0"
 }
