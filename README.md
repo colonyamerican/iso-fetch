@@ -1,27 +1,45 @@
 iso-fetch
 =========
 
-An isomorphic API proxy. It's part of FluxApp and shouldn't be used
-directly.
+An isomorphic API proxy, which currently supports jquery on the browser and hapi on the server. This module was created to compliment [Fluxapp](http://www.github.com/colonyamerican/fluxapp) actions and allow server and client to share the same code base.
 
-## Protocol
+## Installation
 
-Be advised that if your server response is a proper JSON with a `payload` key,
-the value under `payload` will be taken as a response. This allows us to pass
-additional metadata in the response.
+`npm install --save iso-fetch`
+
+## Usage with fluxapp
+
+### Hapi
+
+```js
+function handler(request, reply) {
+  const context = fluxApp.createContext({
+      fetcher: isoFetch('hapi', {
+        request: request
+      })
+  });  
+}
+```
+
+
+### jQuery (webpack or browserify)
+
+```js
+const context = fluxApp.createContext({
+  fetcher: isoFetch('jquery')
+});  
+```
+
+Using the above it will expose a method on our actions `this.context.fetcher(options)`, for both server side and client side usage.
+
+## Supported Options
+
+* url
+* method
+* headers
+* payload
+
 
 ## Writing your own transports
 
-Transports to other servers/clients are very welcome. A transport needs to export two
-functions, `request` and `init`. Both accept a single `Object` and are used to post the
-request and initialize the transport, respectively.
-
-Remember that only the reply contents has to be passed down the promise chain
-to the handler, the rest of the parameters (currently `statusCode` and `headers`)
-are need to be bound to `this`.
-
-The transport may be initialized with a cookie, if it's a server side
-transport. It will be passed in the second parameter to the initializing
-function, under the `cookie` key.
-
-When in doubt, consult the `hapi` and `jquery` transports.
+Take a look at the existing [Hapi](./lib/transports/hapi.js) and [jQuery](./lib/transports/jquery.js) implementations. The transport should expose a function that accepts a config object and return a function that accepts an options object.

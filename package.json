@@ -17,8 +17,6 @@
     "bluebird": "^2.3.11",
     "boom": "^2.6.1",
     "jquery": "^2.1.1",
-    "lodash": "^2.4.1",
-    "ramda": "^0.13.0"
-  },
-  "readmeFilename": "README.md"
+    "lodash": "^2.4.1"
+  }
 }
