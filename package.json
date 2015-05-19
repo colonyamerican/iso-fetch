@@ -1,6 +1,6 @@
 {
   "name": "iso-fetch",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "An isomorphic fetcher",
   "main": "lib/index.js",
   "keywords": [
@@ -12,11 +12,18 @@
   "author": {
     "name": "Michal Kawalec"
   },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/colonyamerican/iso-fetch.git"
+  },
   "license": "MIT",
   "dependencies": {
     "bluebird": "^2.3.11",
     "boom": "^2.6.1",
     "jquery": "^2.1.1",
     "lodash": "^2.4.1"
+  },
+  "peerDependencies": {
+    "fluxapp": "^0.1.0"
   }
 }
