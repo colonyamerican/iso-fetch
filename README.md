@@ -1,4 +1,4 @@
-iso-fetch
+Fluxapp Fetch
 =========
 
 An isomorphic API proxy, which currently supports jquery on the browser and hapi on the server. This module was created to compliment [Fluxapp](http://www.github.com/colonyamerican/fluxapp) actions and allow server and client to share the same code base.
