@@ -14,7 +14,7 @@
   },
   "repository" : {
     "type" : "git",
-    "url" : "https://github.com/colonyamerican/iso-fetch.git"
+    "url" : "https://github.com/colonyamerican/fluxapp-fetch.git"
   },
   "license": "MIT",
   "dependencies": {
