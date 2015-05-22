@@ -5,16 +5,18 @@ An isomorphic API proxy, which currently supports jquery on the browser and hapi
 
 ## Installation
 
-`npm install --save iso-fetch`
+`npm install --save fluxapp-fetch`
 
 ## Usage with fluxapp
 
 ### Hapi
 
 ```js
+import fetch from 'fluxapp-fetch';
+
 function handler(request, reply) {
   const context = fluxApp.createContext({
-      fetcher: isoFetch('hapi', {
+      fetcher: fetch('hapi', {
         request: request
       })
   });  
@@ -25,8 +27,10 @@ function handler(request, reply) {
 ### jQuery (webpack or browserify)
 
 ```js
+import fetch from 'fluxapp-fetch';
+
 const context = fluxApp.createContext({
-  fetcher: isoFetch('jquery')
+  fetcher: fetch('jquery')
 });  
 ```
 
