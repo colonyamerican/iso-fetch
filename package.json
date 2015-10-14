@@ -1,6 +1,6 @@
 {
   "name": "fluxapp-fetch",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "An isomorphic fetcher",
   "main": "lib/index.js",
   "keywords": [
@@ -12,18 +12,24 @@
   "author": {
     "name": "Michal Kawalec"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/colonyamerican/fluxapp-fetch.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/colonyamerican/fluxapp-fetch.git"
   },
   "license": "MIT",
   "dependencies": {
     "bluebird": "^2.3.11",
     "boom": "^2.6.1",
     "jquery": "^2.1.1",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "whatwg-fetch": "^0.10.0"
   },
   "peerDependencies": {
-    "fluxapp": "^0.1.0"
+    "fluxapp": "^0.2.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^4.1.3",
+    "eslint": "^1.6.0",
+    "eslint-plugin-cah": "^0.2.0"
   }
 }
