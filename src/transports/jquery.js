@@ -1,3 +1,4 @@
+/* global FormData */
 import Promise from 'bluebird';
 import _ from 'lodash';
 import boom from 'boom';
@@ -35,6 +36,11 @@ export default (config, opts) => {
       options[optionMap[optKey]] = optValue;
       return options;
     }, {});
+
+    if (jQueryOpts.data instanceof FormData) {
+      jQueryOpts.processData = false;
+      jQueryOpts.contentType = false;
+    }
 
     return $.ajax(jQueryOpts)
     .done((data, textStatus, jqXHR) => {
