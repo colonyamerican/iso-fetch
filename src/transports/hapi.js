@@ -31,9 +31,10 @@ export default (config, opts) => {
       return reject(new Error('FluxappFetch:hapi Request options must be a non-empty object'));
     }
 
-    opts.headers = _.assign({
-      Cookie : request.headers.cookie,
-    }, opts.headers || {});
+    opts.headers = _.clone(request.headers);
+    opts.credentials = request.auth.credentials;
+
+    delete opts.headers['accept-encoding'];
 
     request.server.inject(opts, (res) => {
       const result = res.result;
