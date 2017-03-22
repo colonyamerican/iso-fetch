@@ -2,7 +2,14 @@
 import Promise from 'bluebird';
 import _ from 'lodash';
 import boom from 'boom';
-import $ from 'jquery';
+
+let jquerySupported = true;
+
+try {
+  var $ = require('jquery');
+} catch (e) {
+  jquerySupported = false;
+}
 
 /**
  * Make an api request
@@ -13,8 +20,9 @@ import $ from 'jquery';
  */
 export default (config, opts) => {
   return new Promise((resolve, reject) => {
-    // enabled options
-    // method=type, url=url, headers=headers, payload=data
+    if (! jquerySupported) {
+      throw new Error('jQuery must be installed to use the jquery transport');
+    }
 
     if (! _.isPlainObject(opts) || _.keys(opts).length === 0) {
       reject(new Error('Options must be a non-empty object'));
