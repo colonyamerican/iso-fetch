@@ -20,13 +20,13 @@ const fetch = window.fetch;
  * @return {Promise}
  */
 export default (config, opts) => {
-  return new Promise((resolve, reject) => {
+  return Promise.try(() => {
     if (! fetchSupported) {
       throw new Error('fetch must be installed to use the fetch transport');
     }
 
     if (! _.isPlainObject(opts) || _.keys(opts).length === 0) {
-      reject(new Error('Options must be a non-empty object'));
+      throw new Error('Options must be a non-empty object');
     }
 
     if (_.isPlainObject(opts.payload)) {
