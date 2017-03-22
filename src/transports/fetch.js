@@ -49,6 +49,7 @@ export default (config, opts) => {
       result.headers[name] = value;
     });
 
+    result.status = response.ok ? 'success' : 'error';
     result.statusCode = response.status;
 
     try {
