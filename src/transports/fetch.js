@@ -5,10 +5,12 @@ import _ from 'lodash';
 let fetchSupported = true;
 
 try {
-  var fetch = require('whatwg-fetch');
+  require('whatwg-fetch');
 } catch (e) {
   fetchSupported = _.has(window, 'fetch');
 }
+
+const fetch = window.fetch;
 
 /**
  * Make an api request
