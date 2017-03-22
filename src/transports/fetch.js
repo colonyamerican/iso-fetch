@@ -6,11 +6,11 @@ let fetchSupported = true;
 
 try {
   require('whatwg-fetch');
-} catch (e) {
-  fetchSupported = _.has(window, 'fetch');
-}
 
-const fetch = window.fetch;
+  var fetch = window.fetch;
+} catch (e) {
+  fetchSupported = false;
+}
 
 /**
  * Make an api request
