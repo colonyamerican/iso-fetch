@@ -58,7 +58,7 @@ export default (config, opts) => {
 
       const headers = _.reduce(splitHeaders, function(hdrs, hdr) {
         const split = hdr.split(':');
-        hdrs[split[0]] = $.trim(_.rest(split).join(':'));
+        hdrs[split[0]] = $.trim(_.tail(split).join(':'));
         return hdrs;
       }, {});
 
