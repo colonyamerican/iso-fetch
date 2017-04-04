@@ -36,33 +36,5 @@ export default (config, opts) => {
     }
 
     return fetch(opts.url, _.omit(opts, ['url', 'payload']));
-  })
-  .bind({})
-  .then(function(response) {
-    this.response = response;
-
-    const result = {
-      headers : {},
-    };
-
-    response.headers.forEach((value, name) => {
-      result.headers[name] = value;
-    });
-
-    result.status = response.ok ? 'success' : 'error';
-    result.statusCode = response.status;
-
-    try {
-      result.result = response.json();
-    } catch (e) {
-      result.result = response.text();
-    }
-
-    return result;
-  })
-  .then(function(result) {
-    _.assign(this, result);
-
-    return result.result;
   });
 };

@@ -1,29 +1,12 @@
 import _ from 'lodash';
 import Promise from 'bluebird';
-import boom from 'boom';
-
-function parseResponse(payload) {
-  let response;
-
-  try {
-    response = JSON.parse(payload);
-    response = response.payload ? response.payload : response;
-  } catch (e) {
-    if (e instanceof SyntaxError) {
-      response = payload;
-    } else {
-      throw e;
-    }
-  }
-
-  return response;
-}
+import Response from './response';
 
 export default (config, opts) => {
   const request = config.request;
 
   if (! request) {
-    throw new Error('FluxappFetch:hapi requires a request option be set');
+    throw new Error('FluxappFetch:hapi requires a request configuration be set');
   }
 
   return new Promise((resolve, reject) => {
@@ -37,22 +20,11 @@ export default (config, opts) => {
     delete opts.headers['accept-encoding'];
 
     request.server.inject(opts, (res) => {
-      const result = res.result;
-      const statusCode = result && result.statusCode || res.statusCode;
-
-      if (statusCode >= 400) {
-        const error = new Error();
-        reject(boom.wrap(error, statusCode, result.message));
-      } else {
-        resolve({
-          statusCode : statusCode,
-          result : parseResponse(res.payload),
-          headers : res.headers,
-        });
-      }
+      resolve(new Response(res.payload, {
+        statusCode : res.statusCode,
+        headers : res.headers,
+        url : opts.url,
+      }));
     });
-  }).bind({}).then(function cleanUp(result) {
-    _.assign(this, result);
-    return result.result;
   });
 };
