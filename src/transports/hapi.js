@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import Promise from 'bluebird';
 import Response from './response';
+import qs from 'qs';
 
 export default (config, opts) => {
   const request = config.request;
@@ -18,6 +19,12 @@ export default (config, opts) => {
     opts.credentials = request.auth.credentials;
 
     delete opts.headers['accept-encoding'];
+
+    if (['get', 'head'].indexOf(opts.method) !== -1 && _.isPlainObject(opts.payload)) {
+      const parsed = qs.stringify(opts.payload);
+      opts.payload = null;
+      opts.url = opts.url.indexOf('?') !== -1 ? opts.url + parsed : `${opts.url}?${parsed}`;
+    }
 
     request.server.inject(opts, (res) => {
       resolve(new Response(res.payload, {

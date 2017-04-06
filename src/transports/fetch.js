@@ -1,6 +1,7 @@
 /* global window */
 import Promise from 'bluebird';
 import _ from 'lodash';
+import qs from 'qs';
 
 let fetchSupported = true;
 
@@ -29,10 +30,19 @@ export default (config, opts) => {
       throw new Error('Options must be a non-empty object');
     }
 
-    if (_.isPlainObject(opts.payload)) {
-      opts.body = JSON.stringify(opts.payload);
-    } else if (opts.payload) {
-      opts.body = opts.payload;
+    const isPlainObject = _.isPlainObject(opts.payload);
+
+    opts.method = opts.method ? opts.method.toLowerCase() : 'get';
+
+    if (['get', 'head'].indexOf(opts.method) === -1) {
+      if (isPlainObject) {
+        opts.body = JSON.stringify(opts.payload);
+      } else if (opts.payload) {
+        opts.body = opts.payload;
+      }
+    } else if (isPlainObject) {
+      const parsed = qs.stringify(opts.payload);
+      opts.url = opts.url.indexOf('?') !== -1 ? opts.url + parsed : `${opts.url}?${parsed}`;
     }
 
     return fetch(opts.url, _.omit(opts, ['url', 'payload']));
