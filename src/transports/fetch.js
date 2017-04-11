@@ -37,6 +37,7 @@ export default (config, opts) => {
     if (['get', 'head'].indexOf(opts.method) === -1) {
       if (isPlainObject) {
         opts.body = JSON.stringify(opts.payload);
+        _.set(opts, 'headers.Content-Type', 'application/json');
       } else if (opts.payload) {
         opts.body = opts.payload;
       }
