@@ -5,9 +5,10 @@ import qs from 'qs';
 import Response from './response';
 
 let axiosSupported = true;
+let fetch = false;
 
 try {
-  const axios = require('axios');
+  fetch = require('axios');
 } catch (e) {
   axiosSupported = false;
 }
@@ -44,7 +45,7 @@ export default (config, opts) => {
       opts.params = opts.payload;
     }
 
-    return axios({
+    return fetch({
       url : opts.url,
       method : opts.method,
       headers : opts.headers,
