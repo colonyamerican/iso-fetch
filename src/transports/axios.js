@@ -55,7 +55,7 @@ export default (config, opts) => {
       ...opts.axios,
     }).then((res) => {
       return new Response(res.data, {
-        statusCode : res.status,
+        status : res.status,
         headers : res.headers,
         url : opts.url,
       })

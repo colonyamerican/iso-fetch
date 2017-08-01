@@ -28,7 +28,7 @@ export default (config, opts) => {
 
     request.server.inject(opts, (res) => {
       resolve(new Response(res.payload, {
-        statusCode : res.statusCode,
+        status : res.statusCode,
         headers : res.headers,
         url : opts.url,
       }));
