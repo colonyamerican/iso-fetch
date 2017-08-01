@@ -52,6 +52,7 @@ export default (config, opts) => {
       data : opts.data,
       params : opts.params,
       withCredentials : !! opts.credentials,
+      ...opts.axios,
     }).then((res) => {
       return new Response(res.data, {
         statusCode : res.status,
