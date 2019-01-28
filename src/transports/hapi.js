@@ -10,7 +10,7 @@ export default (config, opts) => {
     throw new Error('FluxappFetch:hapi requires a request configuration be set');
   }
 
-  return new Promise((resolve, reject) => {
+  return Promise.try(() => {
     if (! _.isPlainObject(opts) || _.keys(opts).length === 0) {
       return reject(new Error('FluxappFetch:hapi Request options must be a non-empty object'));
     }
@@ -26,12 +26,22 @@ export default (config, opts) => {
       opts.url = opts.url.indexOf('?') !== -1 ? opts.url + parsed : `${opts.url}?${parsed}`;
     }
 
-    request.server.inject(opts, (res) => {
-      resolve(new Response(res.payload, {
+    if (_.isFunction(config.onRequest)) {
+      opts = config.onRequest(opts, request, config);
+    } else if (_.isPlainObject(config.requestOptions)) {
+      opts = {
+        ...opts,
+        ...config.requestOptions,
+      };
+    }
+
+    return request.server.inject(opts)
+    .then((res) => {
+      return new Response(res.payload, {
         status : res.statusCode,
         headers : res.headers,
         url : opts.url,
-      }));
+      });
     });
   });
 };

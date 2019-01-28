@@ -45,6 +45,10 @@ export default (config, opts) => {
       opts.params = opts.payload;
     }
 
+    opts.validateStatus = _.get(opts, 'validateStatus', (status) => {
+      return true;
+    });
+
     return fetch({
       url : opts.url,
       method : opts.method,
@@ -52,7 +56,7 @@ export default (config, opts) => {
       data : opts.data,
       params : opts.params,
       withCredentials : !! opts.credentials,
-      ...opts.axios,
+      validateStatus : opts.validateStatus,
     }).then((res) => {
       return new Response(res.data, {
         status : res.status,
